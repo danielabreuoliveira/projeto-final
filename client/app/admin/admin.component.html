@@ -1,0 +1,76 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Usuários Cadastrados ({{users.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>ID</th>
+          <th>Data de Inclusão</th>
+          <th>CPF</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Tipo</th>
+          <th>Açoes</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users.length === 0">
+        <tr>
+          <td colspan="4">Não há usuários registrados.</td>
+        </tr>  
+      </tbody>
+        <tbody *ngIf="!isEditing">
+        <tr *ngFor="let user of users">
+          <td>{{user.id}}</td>
+          <td>{{user.dataInclusao}}</td>
+          <td>{{user.cpf}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>
+          <button class="btn btn-sm btn-warning" (click)="enableEditing(user)"><i class="fa fa-pencil"></i></button><button class="btn btn-sm btn-danger" (click)="deleteUser(user)" [disabled]="auth.currentUser._id === user._id">
+              <i class="fa fa-trash"></i>
+         </button>
+          </td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="isEditing">
+          <tr>
+              <td colspan="9">
+              <form class="form-inline" #form="ngForm" (ngSubmit)="editUser(user)" >
+                <div class="form-group col-md-1">
+                    <input class="form-control" type="number" name="id" [(ngModel)]="user.id" placeholder="ID do usuário" required>
+                </div>
+                <div class="form-group col-md-2">
+                  <input class="form-control" type="date" name="dataInclusao" [(ngModel)]="user.dataInclusao" placeholder="Data de Inclusão" required>
+                </div>
+                <div class="form-group col-md-2">
+                  <input class="form-control" type="number" name="cpf" [(ngModel)]="user.cpf" placeholder="CPF" required>
+                </div>
+                <div class="form-group col-md-2">
+                  <input class="form-control" type="text" name="username" [(ngModel)]="user.username" placeholder="Nome" required>
+                </div>
+                <div class="form-group col-md-2">
+                  <input class="form-control" type="text" name="email" [(ngModel)]="user.email" placeholder="Email" required>
+                </div>
+                <div class="input-group col-md-2">
+                  <select class="form-control" name="role" [(ngModel)]="user.role">
+                    <option value="" disabled>Opção</option>
+                    <option value="user">Usuário</option>
+                    <option value="admin">Administrador</option>
+                  </select>
+                </div>
+                <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i></button>
+              </form>
+              <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i></button>  
+            </td>  
+           </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+  

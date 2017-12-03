@@ -1,0 +1,123 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header"><i class="fa fa-beer" aria-hidden="true"></i> Produtos Registrados ({{produtos.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Estoque Minimo</th>
+          <th>Quantidade</th>
+          <th>Dias de Reposição</th>
+          <th>Categoria</th>
+          <th>Localização</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="produtos.length === 0">
+        <tr>
+          <td colspan="8">Não há produtos cadastrados. Adicione um novo produto abaixo.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing" >
+        <tr *ngFor="let produto of produtos">
+          <td>{{produto.id}}</td>
+          <td>{{produto.name}}</td>
+          <td>{{produto.estoquemin}}</td>
+          <td>{{produto.qtd}}</td>
+          <td>{{produto.diasreposicao}}</td>
+          <td>{{produto.categoria}}</td>
+          <td>{{produto.localizacao}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(produto)"><i class="fa fa-pencil"></i></button> 
+            <button class="btn btn-sm btn-danger" (click)="deleteProduto(produto)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>  
+      </tbody>
+     
+      <tbody *ngIf="isEditing">
+        <tr>
+        <td colspan="7">
+            <form class="form-inline" #form="ngForm" (ngSubmit)="editProduto(produto)" >
+              <div class="form-group">
+                  <input class="form-control" type="number" name="id" [(ngModel)]="produto.id" placeholder="ID do produto" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="name" [(ngModel)]="produto.name" placeholder="Name" required>
+              </div>
+              <div class="form-group ">
+                <input class="form-control" type="number"  name="estoquemin" [(ngModel)]="produto.estoquemin" placeholder="Estoque Minimo" step="any"  required>
+              </div>
+              <div class="form-group ">
+                <input class="form-control" type="number" name="qtd" [(ngModel)]="produto.qtd" placeholder="Quantidade" step="any" required>
+              </div>
+              <div class="form-group ">
+                <input class="form-control" type="number" name="diasreposicao" [(ngModel)]="produto.diasreposicao" placeholder="Dias de Reposição" step="any" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="categoria" [(ngModel)]="produto.categoria" placeholder="Categoria" step="any" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="localizacao" [(ngModel)]="produto.localizacao" placeholder="Localização" step="any" required>
+              </div> 
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i></button>
+              <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i></button>  
+            </form>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Adicionar - Produtos</h4>
+  <div class="card-block">
+    <form class="form-horizontal" [formGroup]="addProdutoForm" (ngSubmit)="addProduto()" style="text-align:center">
+      <div class="form-group  col-md-3">
+        <input class="form-control" type="number" name="id" formControlName="id" placeholder="ID do Produto" required>
+      </div>
+      <div class="form-group col-md-3">
+          <input class="form-control " type="text" name="name" formControlName="name" placeholder="Nome" required>
+      </div>
+      <div class="form-group col-md-3">
+        <input class="form-control" type="number" name="estoquemin" formControlName="estoquemin" placeholder="Estoque Minimo" required>
+      </div>
+      <div class="form-group col-md-3">
+        <input class="form-control " type="number" name="qtd" formControlName="qtd" placeholder="Quantidade" required>
+      </div>
+      <div class="form-group col-md-4">
+        <input class="form-control" type="number" name="diasreposicao" formControlName="diasreposicao" placeholder="Dias de Reposição" required>
+      </div>
+      <div class="form-group col-md-4">
+        <select class="form-control " type="categoria" name="categoria" formControlName="categoria" id="categoria" required>
+          <option *ngFor="let categoria of categorias" [value]="categoria">{{produto.categoria}}</option>
+          <option value="" selected disabled>Categoria</option>
+          <option>Àgua</option>
+          <option>Cerveja</option>
+          <option>Refrigerante</option>
+          <option>Energetico</option>
+          <option>Pinga</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4 ">
+        <input class="form-control " type="localizacao" name="localizacao" formControlName="localizacao" placeholder="Localização" required>
+      </div>
+      <button class="btn btn-success" type="submit" [disabled]="!addProdutoForm.valid"><i class="fa fa-floppy-o"></i> Adicionar</button>
+    </form>
+    </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Pesquisar - Produtos</h4>
+  <div class="card-block">
+      <form class="form-inline"  style="text-align:center">
+      <input class="form-control" type="text" name="id" formControlName="id" placeholder="O que você está procurando?">
+      <button class="btn btn-primary" type="submit" [disabled]="!addProdutoForm.valid"><i class="fa fa-search"></i>Pesquisar</button>
+      </form>  
+    </div>
+  </div>

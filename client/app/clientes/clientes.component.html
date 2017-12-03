@@ -1,0 +1,138 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header"><i class="fa fa-user-circle"></i> Clientes - Registrados ({{clientes.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Endereço</th>
+          <th>Telefone</th>
+          <th>Cidade</th>
+          <th>CEP</th>
+          <th>Estado</th>
+          <th>Sigla</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="clientes.length === 0">
+        <tr>
+          <td colspan="10">Não há clientes cadastrados. Adicione um novo cliente abaixo.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing">
+        <tr *ngFor="let cliente of clientes">
+          <td>{{cliente.id}}</td>
+          <td>{{cliente.nome}}</td>
+          <td>{{cliente.email}}</td>
+          <td>{{cliente.endereco}}</td>
+          <td>{{cliente.telefone}}</td>
+          <td>{{cliente.cidade}}</td>
+          <td>{{cliente.cep}}</td>
+          <td>{{cliente.estado}}</td>
+          <td>{{cliente.sigla}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(cliente)"><i class="fa fa-pencil"></i></button> <button class="btn btn-sm btn-danger" (click)="deleteCliente(cliente)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="isEditing">
+        <tr>
+            <td colspan="10">
+            <form class="form-inline-block" #form="ngForm" (ngSubmit)="editCliente(cliente)">
+              <div class="form-group col-md-1">
+                  <input class="form-control" type="number" name="id" [(ngModel)]="cliente.id" placeholder="ID" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="text" name="nome" [(ngModel)]="cliente.nome" placeholder="Nome" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="text" name="email" [(ngModel)]="cliente.email" placeholder="Email" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="text" name="endereco" [(ngModel)]="cliente.endereco" placeholder="Endereço" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="number" name="telefone" [(ngModel)]="cliente.telefone" placeholder="Telefone" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="text" name="cidade" [(ngModel)]="cliente.cidade" placeholder="Cidade" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="number" name="cep" [(ngModel)]="cliente.cep" placeholder="CEP" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-2">
+                <input class="form-control" type="text" name="estado" [(ngModel)]="cliente.estado" placeholder="Estado" required>
+              </div>
+              <div class="form-group col-xs-12 col-sm-1">
+                <input class="form-control" type="text" name="sigla" [(ngModel)]="cliente.sigla" placeholder="Sigla" required>
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i></button>
+            </form>
+            <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i></button>  
+          </td>  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Adicionar - Clientes</h4>
+  <div class="card-block">
+    <form class="form-horizontal" [formGroup]="addClienteForm" (ngSubmit)="addCliente()" style="text-align:center">
+      <div class="form-group col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">ID do Cliente</label>            
+          <input class="form-control" type="text" name="id" formControlName="id" placeholder="ID do Cliente">
+      </div>
+      <div class="col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Nome</label>   
+        <input class="form-control" type="text" name="nome" formControlName="nome" placeholder="Nome" >
+      </div>
+      <div class="col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Email</label>   
+        <input class="form-control" type="text" name="email" formControlName="email" placeholder="Email">
+      </div>
+      <div class="col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Endereço</label>   
+        <input class="form-control" type="text" name="endereco" formControlName="endereco" placeholder="Endereço">
+      </div>
+      <div class="col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Telefone</label>   
+        <input class="form-control" type="number" name="telefone" formControlName="telefone" placeholder="Telefone">
+      </div>
+      <div class="form-group col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Cidade</label>   
+        <input class="form-control" type="text" name="cidade" formControlName="cidade" placeholder="Cidade">
+      </div>
+      <div class="form-group col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">CEP</label>   
+        <input class="form-control" type="number" name="cep" formControlName="cep" placeholder="CEP">
+      </div>
+      <div class="form-group col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Estado</label>   
+        <input class="form-control" type="text" name="estado" formControlName="estado" placeholder="Estado">
+      </div>
+      <div class="form-group col-xs-12 col-sm-4">
+          <label for="password" class="form-control-label">Sigla</label>   
+        <input class="form-control" type="text" name="sigla" formControlName="sigla" placeholder="Sigla">
+      </div>
+      <button class="btn btn-success" type="submit" [disabled]="!addClienteForm.valid"><i class="fa fa-floppy-o"></i> Adicionar</button>
+    </form>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Pesquisar - Clientes</h4>
+  <div class="card-block">
+      <form class="form-inline"  style="text-align:center">
+      <input class="form-control" type="text" name="id" formControlName="id" placeholder="Pesquisar">
+      <button class="btn btn-primary" type="submit" [disabled]="!addClienteForm.valid"><i class="fa fa-search"></i>Pesquisar</button>
+      </form>  
+    </div>
+  </div>

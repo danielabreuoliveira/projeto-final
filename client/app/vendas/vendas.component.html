@@ -1,0 +1,72 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Compras - Realizadas ({{vendas.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>ID</th>
+          <th>Data da Compra </th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="vendas.length === 0">
+        <tr>
+          <td colspan="4">Não há Compras registradass. Adicione as compras abaixo.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing">
+        <tr *ngFor="let venda of vendas">
+          <td>{{venda.id}}</td>
+          <td>{{venda.dataVenda}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(venda)"><i class="fa fa-pencil"></i></button> <button class="btn btn-sm btn-danger" (click)="deleteVenda(venda)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="isEditing">
+        <tr>
+          <td colspan="3">
+            <form class="form-inline" #form="ngForm" (ngSubmit)="editVenda(venda)" style="display:inline">
+              <div class="form-group">
+                  <input class="form-control" type="number" name="id" [(ngModel)]="venda.id" placeholder="ID" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="date" name="datVenda" [(ngModel)]="venda.dataVenda" placeholder="Data da Venda" required>
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i> </button>
+            </form>
+            <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Adicionar - Compras</h4>
+  <div class="card-block">
+    <form class="form-horizontal" [formGroup]="addVendaForm" (ngSubmit)="addVenda()" style="text-align:center">
+      <div class="form-group col-md-4">
+          <input class="form-control" type="text" name="id" formControlName="id" placeholder="ID da Compra">
+      </div>
+      <div class="form-group col-md-4">
+        <input class="form-control" type="date" name="dataVenda" formControlName="dataVenda" placeholder="Data da Compra" >
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="!addVendaForm.valid"><i class="fa fa-floppy-o"></i> Adicionar</button>
+    </form>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Pesquisar - Compras</h4>
+  <div class="card-block">
+      <form class="form-inline"  style="text-align:center">
+      <input class="form-control" type="text" name="id" formControlName="id" placeholder="Pesquisar">
+      <button class="btn btn-primary" type="submit" [disabled]="!addVendasForm.valid"><i class="fa fa-search"></i>Pesquisar</button>
+      </form>  
+    </div>
+  </div>

@@ -1,0 +1,39 @@
+
+<div class="container">
+
+  <nav class="navbar navbar-dark bg-primary" *ngIf="auth.loggedIn">
+  
+    <div class="nav navbar-nav" >
+      <a routerLink="/pagina_inicial" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <i class="fa fa-home"></i> Home
+      </a>
+      <a routerLink="/clientes" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <i class="fa fa-user-circle" aria-hidden="true"></i> Clientes
+      </a>
+      <a routerLink="/vendas" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Compras
+      </a>
+      <a routerLink="/produtos" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn && auth.isAdmin">
+        <i class="fa fa-beer" aria-hidden="true"></i> Produtos
+      </a>
+      <a routerLink="/fornecedores" class="nav-item nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="auth.loggedIn && auth.isAdmin">
+        <i class="fa fa-truck" aria-hidden="true"></i> Fornecedores
+      </a>
+      <a routerLink="/relatorio" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i> Relatório
+      </a>
+      <a routerLink="/admin" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
+        <i class="fa fa-lock"></i> Usuarios
+      </a>
+      <a routerLink="/account" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+        <i class="fa fa-user"></i> Conta ({{auth.currentUser.username}})
+      </a>
+      <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+        <i class="fa fa-sign-out"></i> Logout
+      </a>
+    </div>
+  </nav>
+
+<router-outlet></router-outlet>
+
+</div>

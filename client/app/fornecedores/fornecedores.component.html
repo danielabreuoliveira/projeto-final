@@ -1,0 +1,84 @@
+
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header"><i class="fa fa-truck" aria-hidden="true"></i> Fornecedores Registrados ({{fornecedores.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CNPJ</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="fornecedores.length === 0">
+        <tr>
+          <td colspan="4">Não há fornecedores cadastrados. Adicione um novo fornecedor abaixo.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing" >
+        <tr *ngFor="let fornecedor of fornecedores">
+          <td>{{fornecedor.id}}</td>
+          <td>{{fornecedor.nome}}</td>
+          <td>{{fornecedor.cnpj}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(fornecedor)"><i class="fa fa-pencil"></i></button> 
+            <button class="btn btn-sm btn-danger" (click)="deleteFornecedor(fornecedor)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>  
+      </tbody>
+     
+      <tbody *ngIf="isEditing">
+        <tr>
+          <td colspan="5">
+            <form class="form-inline" #form="ngForm" (ngSubmit)="editFornecedor(fornecedor)" >
+              <div class="form-group">
+                  <input class="form-control" type="number" name="id" [(ngModel)]="fornecedor.id" placeholder="Id" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="nome" [(ngModel)]="fornecedor.nome" placeholder="Nome" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="number"  name="cnpj" [(ngModel)]="fornecedor.cnpj" placeholder="CNPJ" step="any"  required>
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i></button>
+              <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i></button>  
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Adicionar - Fornecedores</h4>
+  <div class="card-block">
+    <form class="form-horizontal" [formGroup]="addFornecedorForm" (ngSubmit)="addFornecedor()" style="text-align:center">
+      <div class="form-group col-md-4">
+        <input class="form-control" type="number" name="id" formControlName="id" placeholder="ID do Fornecedor" required>
+      </div>
+      <div class="form-group col-md-4">
+          <input class="form-control" type="text" name="nome" formControlName="nome" placeholder="Nome" required>
+      </div>
+      <div class="form-group col-md-4">
+        <input class="form-control" type="number" name="cnpj" formControlName="cnpj" placeholder="CNPJ" required>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="!addFornecedorForm.valid"><i class="fa fa-floppy-o"></i> Adicionar</button>
+    </form>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+    <h4 class="card-header">Pesquisar - Fornecedores</h4>
+    <div class="card-block">
+        <form class="form-inline"  style="text-align:center">
+        <input class="form-control" type="text" name="id" formControlName="id" placeholder="Pesquisar">
+        <button class="btn btn-primary" type="submit" [disabled]="!addFornecedorForm.valid"><i class="fa fa-search"></i>Pesquisar</button>
+        </form>  
+      </div>
+    </div>

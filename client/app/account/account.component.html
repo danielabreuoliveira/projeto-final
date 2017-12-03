@@ -1,0 +1,42 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Conta - Detalhes</h4>
+  <div class="card-block">
+    <form #accountForm="ngForm" (ngSubmit)="save(user)">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-id-card"></i></span>
+        <input class="form-control" type="number" name="id" [(ngModel)]="user.id" placeholder="ID" required>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+        <input class="form-control" type="date" name="dataInclusao" [(ngModel)]="user.dataInclusao" placeholder="Data de Inclusão" required>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+        <input class="form-control" type="number" name="cpf" [(ngModel)]="user.cpf" placeholder="CPF" required>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input class="form-control" type="text" name="username" [(ngModel)]="user.username" placeholder="Nome" required>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <input class="form-control" type="email" name="email" [(ngModel)]="user.email" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-black-tie"></i></span>
+        <select class="form-control" name="role" [(ngModel)]="user.role">
+          <option value="" disabled>Opção</option>
+          <option value="user">Usuário</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="!accountForm.form.valid">
+        <i class="fa fa-save"></i> Salvar
+      </button>
+    </form>
+  </div>
+</div>

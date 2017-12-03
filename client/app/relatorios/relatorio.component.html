@@ -1,0 +1,49 @@
+<div class="card">
+    <h4 class="card-header">Relatorio</h4>
+</div>
+
+<div class="card">
+         <h4 class="card-header">Curva ABC </h4>
+         <div class="card-block">
+           <table class="table table-bordered table-striped">
+            <thead class="thead-default">
+              <tr>
+                <th>Cliente</th>
+                <th>Produtos</th>
+                <th>Compras</th>
+                <th>%</th>
+                <th>Curva ABC</th>
+              </tr>
+            </thead>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            
+              </table>
+             
+             <div class="col-md-6">
+              
+                 <canvas baseChart
+                             [data]="lineChartData"
+                             [labels]="lineChartLabels"
+                             [options]="lineChartOptions"
+                             [chartType]="lineChartType"
+                             (chartHover)="chartHovered($event)"
+                             (chartClick)="chartClicked($event)"></canvas>
+               </div>
+               <div class="col-md-6">
+                 <canvas baseChart
+                             [data]="pieChartData"
+                             [labels]="pieChartLabels"
+                             [chartType]="pieChartType"
+                             (chartHover)="chartHovered($event)"
+                             (chartClick)="chartClicked($event)"></canvas>
+               </div>
+               <div class="col-md-12 text-center" style="margin-top: 10px;height: 50%">
+                 <button class="btn btn-primary" (click)="randomizeType()" style="display: inline-block">Atualizar</button>
+               </div>
+        </div>  
+      </div>
+        

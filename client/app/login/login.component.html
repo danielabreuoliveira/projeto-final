@@ -1,0 +1,22 @@
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="divCenter"><h4>Login</h4>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      
+      <div class="input-group" [ngClass]="setClassEmail()">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email" autofocus>
+      </div>
+      <div [hidden]="email.valid || email.pristine" class="alert alert-danger">Por favor entre com um email válido!</div>
+
+      <div class="input-group" [ngClass]="setClassPassword()">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Senha">
+      </div>
+      <div [hidden]="password.valid || password.pristine" class="alert alert-danger">Senha Incorreta!</div>
+      
+      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid"><i class="fa fa-sign-in"></i> Login</button>
+      <a [routerLink]="['/register']" class="btn btn-link">Cadastrar-se</a>
+    </form>
+</div>

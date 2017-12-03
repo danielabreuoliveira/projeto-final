@@ -1,0 +1,57 @@
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card">
+  <h4 class="card-header">Cadastro - Usuario</h4>
+  <div class="card-block">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="col-xs-12 col-sm-3" [ngClass]="setClassUserid()">
+          <label for="cpf" class="form-control-label">ID do Usuário</label>
+          <mt-input-container errorMessage="ID invalido">
+            <input class="form-control" type="number" formControlName="id" placeholder="ID" autocomplete="on">
+          </mt-input-container>
+      </div>
+      <div class="col-xs-12 col-sm-6" [ngClass]="setClassDataInclusao()">
+        <label for="cpf" class="form-control-label">Data de Inclusão</label>
+        <mt-input-container errorMessage="Data Incorreta" label="Data de Inclusão">
+        <input class="form-control" type="date" formControlName="dataInclusao" placeholder="Data de Inclusao" autocomplete="on">
+        </mt-input-container>
+      </div>
+      <div class="col-xs-12 col-sm-3" [ngClass]="setClassCpf()">
+        <label for="cpf" class="form-control-label">CPF</label>
+        <mt-input-container errorMessage="CPF incorreto" >
+        <input class="form-control" type="number" formControlName="cpf" placeholder="CPF" autocomplete="on">
+        </mt-input-container>
+      </div>
+      <div class="col-xs-12 col-sm-4" [ngClass]="setClassUsername()">
+        <label for="nome" class="form-control-label">Nome</label>
+        <mt-input-container errorMessage="Nome incorreto" >
+        <input class="form-control" type="text" formControlName="username" placeholder="Usuario" autocomplete="off">
+        </mt-input-container>
+      </div>
+      
+      <div class="col-xs-12 col-sm-4" [ngClass]="setClassEmail()">
+        <label for="email" class="form-control-label">Email</label>
+        <mt-input-container errorMessage="Email incorreto!!" >
+        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email"autofocus>
+        </mt-input-container>  
+      </div>
+      <div class="col-xs-12 col-sm-4" [ngClass]="setClassPassword()">
+        <label for="password" class="form-control-label">Senha</label>
+        <mt-input-container errorMessage="Senha inválida">
+        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Senha">
+        </mt-input-container>  
+      </div>
+      <div class="col-xs-12 col-sm-12">
+          <label for="password" class="form-control-label">Tipo</label>
+        <select class="form-control" name="role" formControlName="role">
+          <option value="" selected disabled>Tipo</option>
+          <option value="user">Usuario</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>   
+      <button class="btn btn-success " type="submit" [disabled]="!registerForm.valid"><i class="fa fa-user-plus"></i>Registrar</button>
+      <button class="btn btn-danger" [routerLink]="['/login']"><i class="fa fa-times"></i>Voltar</button>
+    </form>
+  </div>
+
+</div>
