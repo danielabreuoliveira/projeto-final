@@ -8,9 +8,7 @@ import {RelatorioService} from '../services/relatorio.service'
 })
 export class RelatorioComponent {
 
-  constructor(relatorioService : RelatorioService) { 
-    relatorioService.dadosCliente;
-
+  constructor() { 
   }
 
   public lineChartData:Array<any> = [

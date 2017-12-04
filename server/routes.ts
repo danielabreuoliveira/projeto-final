@@ -10,6 +10,8 @@ import VendaCtrl from './controllers/venda';
 import Venda from './models/venda';
 import FornecedorCtrl from './controllers/fornecedor';
 import Fornecedor from './models/fornecedor';
+import homeCtrl from './controllers/home';
+import HomeCtrl from './controllers/home';
 
 export default function setRoutes(app) {
 
@@ -20,6 +22,7 @@ export default function setRoutes(app) {
   const userCtrl = new UserCtrl();
   const vendaCtrl = new VendaCtrl();
   const fornecedorCtrl = new FornecedorCtrl();
+  const homeCtrl = new HomeCtrl();
 
   // Produtos
   router.route('/produtos').get(produtoCtrl.getAll);
@@ -67,5 +70,6 @@ export default function setRoutes(app) {
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);
+  router.route('/home').get(homeCtrl.getInfos);
 
 }

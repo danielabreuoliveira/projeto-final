@@ -10,7 +10,6 @@ export class ClienteService {
   private headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8' });
   private options = new RequestOptions({ headers: this.headers });
 
-  dadosCliente : any;
 
   constructor(private http: Http) { }
 
