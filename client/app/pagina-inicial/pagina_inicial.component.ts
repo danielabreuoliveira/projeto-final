@@ -13,10 +13,17 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./pagina_inicial.component.scss']
 })
 export class Pagina_inicialComponent implements OnInit {
-  home = {};
+  home = {    
+    quantUsuarios: 0,
+    quantProdutos: 0,
+    quantFornecedores: 0,
+    quantVendar: 0,
+    quantClientes: 0
+
+  };
   dados : any;
   isLoading = true;
-  isEditing = false;  
+ 
 
   constructor(private homeService: HomeService) { }
 
