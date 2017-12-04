@@ -4,6 +4,7 @@ import { RoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
 import { ClienteService} from './services/cliente.service';
 import { VendaService} from './services/venda.service';
+import { HomeService } from './services/home.service';
 
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
@@ -42,7 +43,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     LogoutComponent,
     AccountComponent,
     AdminComponent,    
-    NotFoundComponent,
+    NotFoundComponent
 
   ],
   imports: [
@@ -58,7 +59,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ClienteService,
     VendaService,
     FornecedorService,
-    UserService
+    UserService,
+    HomeService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

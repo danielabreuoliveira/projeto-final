@@ -21,12 +21,12 @@ export class Pagina_inicialComponent implements OnInit {
   constructor(private homeService: HomeService) { }
 
   ngOnInit() {
-    this.home = this.homeService.getHome();
-}
+    this.getHome();
+  }
 
   getHome() {
   this.homeService.getHome().subscribe(
-    data => this.home = data,
+    data => {this.home = data;console.log(this.home)},
     error => console.log(error),
     () => this.isLoading = false
   );
